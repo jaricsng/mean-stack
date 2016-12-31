@@ -1,4 +1,4 @@
-/// solution: https://github.com/jakblak/thinkster_mean_app
+/// solution: https://github.com/jermspeaks/Thinkster-MEAN-Tutorial
 /// https://thinkster.io/tutorials/mean-stack/opening-rest-routes
 
 var express = require('express');
@@ -9,10 +9,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 //MongoDB connecting and modeling:
 var mongoose = require('mongoose');
+var passport = require('passport');
+
 mongoose.connect('mongodb://localhost/news');
 
 require('./models/Posts');
 require('./models/Comments');
+require('./models/Users');
+require('./config/passport');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -30,6 +34,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
 
 app.use('/', index);
 app.use('/users', users);
