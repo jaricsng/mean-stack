@@ -8,7 +8,7 @@ app.config([
         $stateProvider
             .state('home', {
                 url: '/home',
-                templateUrl: '/home.html',
+                templateUrl: '../views/home.html',
                 controller: 'MainCtrl',
                 resolve: {
                     postPromise: ['posts', function(posts) {
@@ -18,7 +18,7 @@ app.config([
             })
             .state('posts', {
                 url: '/posts/:id',
-                templateUrl: '/posts.html',
+                templateUrl: '../views/posts.html',
                 controller: 'PostsCtrl',
                 resolve: {
                     post: ['$stateParams', 'posts', function($stateParams, posts) {
@@ -28,7 +28,7 @@ app.config([
             })
             .state('login', {
                 url: '/login',
-                templateUrl: '/login.html',
+                templateUrl: '../views/login.html',
                 controller: 'AuthCtrl',
                 onEnter: ['$state', 'auth', function($state, auth) {
                     if (auth.isLoggedIn()) {
@@ -38,13 +38,27 @@ app.config([
             })
             .state('register', {
                 url: '/register',
-                templateUrl: '/register.html',
+                templateUrl: '../views/register.html',
                 controller: 'AuthCtrl',
                 onEnter: ['$state', 'auth', function($state, auth) {
                     if (auth.isLoggedIn()) {
                         $state.go('home');
                     }
                 }]
+            })
+            .state('dashboard', {
+                url: '/dashboard',
+                templateUrl: '../views/dashboard.html',
+                controller: 'DashboardCtrl'
+            })
+            .state('reports', {
+                url: '/reports',
+                templateUrl: '../views/reports.html',
+                controller: 'ReportsCtrl'
+            })
+            .state('about', {
+                url: '/about',
+                templateUrl: '../views/about.html'
             });
         $urlRouterProvider.otherwise('home');
     }
@@ -291,6 +305,26 @@ app.controller('PostsCtrl', [
 ]);
 
 app.controller('NavCtrl', [
+    '$scope',
+    'auth',
+    function($scope, auth) {
+        $scope.isLoggedIn = auth.isLoggedIn;
+        $scope.currentUser = auth.currentUser;
+        $scope.logOut = auth.logOut;
+    }
+]);
+
+app.controller('ReportsCtrl', [
+    '$scope',
+    'auth',
+    function($scope, auth) {
+        $scope.isLoggedIn = auth.isLoggedIn;
+        $scope.currentUser = auth.currentUser;
+        $scope.logOut = auth.logOut;
+    }
+]);
+
+app.controller('DashboardCtrl', [
     '$scope',
     'auth',
     function($scope, auth) {

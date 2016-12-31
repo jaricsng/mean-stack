@@ -1,0 +1,28 @@
+<div class="jumbotron">
+  <h3>
+      <a ng-show="post.link" href="{{post.link}}">
+          {{post.title}}
+      </a>
+      <span ng-hide="post.link">
+          {{post.title}}
+      </span>
+  </h3>
+</div>
+
+    <div ng-repeat="comment in post.comments | orderBy: '-votes'">
+        <span class="glyphicon glyphicon-thumbs-up" ng-click="upvote(comment)"></span> {{comment.votes}}
+        <span class="glyphicon glyphicon-thumbs-down" ng-click="downvote(comment)"></span> - by {{comment.author}}
+        <span style="font-size:20px;margin-left:10px">
+            {{comment.body}}
+        </span>
+    </div>
+    <div ng-hide="isLoggedIn()">
+        <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can comment.</h3>
+    </div>
+    <form ng-submit="addComment()" ng-show="isLoggedIn()" style="margin-top:30px">
+        <h3>Add a new comment</h3>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Comment" ng-model="body">
+        </div>
+        <button type="submit" class="btn btn-primary">Post to {{post.title}}</button>
+    </form>
