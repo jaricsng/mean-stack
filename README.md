@@ -6,3 +6,5 @@ the mean stacks uses the following
 - Express
 - AngularJS 1
 - Bootstraps
+- jwt
+- Passport
