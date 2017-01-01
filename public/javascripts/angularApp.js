@@ -46,6 +46,11 @@ app.config([
                     }
                 }]
             })
+            .state('profile', {
+                url: '/profile',
+                templateUrl: '../views/profile.html',
+                controller: 'ProfileCtrl'
+            })
             .state('dashboard', {
                 url: '/dashboard',
                 templateUrl: '../views/dashboard.html',
@@ -150,7 +155,7 @@ app.factory('posts', ['$http', 'auth', function($http, auth) {
     return o;
 }]);
 
-app.factory('auth', ['$http', '$window', function($http, $window) {
+app.factory('auth', ['$http', '$window','$state', function($http, $window,$state) {
     var auth = {};
     auth.saveToken = function(token) {
         $window.localStorage['flapper-news-token'] = token;
@@ -195,6 +200,7 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
 
     auth.logOut = function() {
         $window.localStorage.removeItem('flapper-news-token');
+        $state.go('home');
     };
 
     return auth;
@@ -325,6 +331,16 @@ app.controller('ReportsCtrl', [
 ]);
 
 app.controller('DashboardCtrl', [
+    '$scope',
+    'auth',
+    function($scope, auth) {
+        $scope.isLoggedIn = auth.isLoggedIn;
+        $scope.currentUser = auth.currentUser;
+        $scope.logOut = auth.logOut;
+    }
+]);
+
+app.controller('ProfileCtrl', [
     '$scope',
     'auth',
     function($scope, auth) {
