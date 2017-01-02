@@ -8,3 +8,11 @@ the mean stacks uses the following
 - Bootstraps
 - jwt
 - Passport
+- ngMaterial
+
+ScreenShot
+
+![ScreenShot](/screenshots/post.png)
+![ScreenShot](/screenshots/login.png)
+![ScreenShot](/screenshots/register.png)
+![ScreenShot](/screenshots/home.png)
